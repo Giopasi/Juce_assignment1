@@ -32,6 +32,16 @@ public:
     lfoToSet = waveform;
   }
 
+  void setModulationRate(float rateHz) {
+    for (auto& lfo : lfos) {
+      lfo.setFrequency(rateHz);
+    }
+  }
+
+  void setGaindB(float gain) {
+    Gain.setGainDecibels(gain);
+  }
+
   void process(juce::AudioBuffer<float>& buffer) noexcept {
     updateLfosWaveform();
     // for each frame
@@ -56,6 +66,7 @@ public:
         buffer.setSample(channelIndex, frameIndex, outputSample);
       }
     }
+
   }
 
   void reset() noexcept {
@@ -80,6 +91,7 @@ private:
       currentLfo = lfoToSet;
     }
   }
+
   /*---------------------------------------------------------*/
   //classe templetizzata con il float, inizializzata con funzione lambda (sine values e phase value)
   std::array<juce::dsp::Oscillator<float>, 2u> lfos{
@@ -88,5 +100,7 @@ private:
   };
   LfoWaveform currentLfo = LfoWaveform::sine;
   LfoWaveform lfoToSet = currentLfo;
+
+  juce::dsp::Gain<float> Gain;
   };
 }  // namespace tremolo
