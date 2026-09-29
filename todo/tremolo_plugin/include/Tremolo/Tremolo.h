@@ -14,6 +14,10 @@ public:
     }
   }
 
+  void setGaindB(float gain) {
+    Gain.setGainDecibels(gain);
+  }
+
   void prepare(double sampleRate, int expectedMaxFramesPerBlock) {
     juce::ignoreUnused(sampleRate, expectedMaxFramesPerBlock);
 
@@ -25,6 +29,7 @@ public:
     for (auto& lfo: lfos) {
       lfo.prepare(processSpec);
     }
+    Gain.prepare(processSpec);
   }
 
   void setLfoWaveform(LfoWaveform waveform) {
@@ -36,10 +41,6 @@ public:
     for (auto& lfo : lfos) {
       lfo.setFrequency(rateHz);
     }
-  }
-
-  void setGaindB(float gain) {
-    Gain.setGainDecibels(gain);
   }
 
   void process(juce::AudioBuffer<float>& buffer) noexcept {
@@ -66,7 +67,9 @@ public:
         buffer.setSample(channelIndex, frameIndex, outputSample);
       }
     }
-
+    juce::dsp::AudioBlock<float> block(buffer);
+    juce::dsp::ProcessContextReplacing<float> context(block);
+    Gain.process(context);
   }
 
   void reset() noexcept {

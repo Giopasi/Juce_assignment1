@@ -60,7 +60,7 @@ void PluginProcessor::prepareToPlay(double sampleRate,
     .sampleRate = sampleRate,
     .maximumBlockSize = static_cast<juce::uint32>(expectedMaxFramesPerBlock),
     .numChannels = static_cast<juce::uint32>(
-      juce::getTotalNumInputChannels(), getTotalNumOutputChannels() ),
+      juce::jmax(getTotalNumInputChannels(),  getTotalNumOutputChannels()) ),
   } );
 }
 
@@ -111,9 +111,9 @@ void PluginProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
   // TODO: update parameters
   tremolo.setModulationRate(parameters.rate.get());
-  bypassTransitionSmoother.setParameters(parameters.bypassed.get());
-  //tremolo.setGaindB(parameters.gain.get());
-  buffer.applyGain(parameters.gain.get()); //TEMPORANEO
+  bypassTransitionSmoother.setBypass(parameters.bypassed.get());
+  tremolo.setGaindB(parameters.gain.get());
+  tremolo.setLfoWaveform(static_cast<Tremolo::LfoWaveform>(parameters.waveform.getIndex()));
 
   // TODO: check for bypass
   if (parameters.bypassed.get() && !bypassTransitionSmoother.isTransitioning()) {
