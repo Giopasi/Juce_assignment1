@@ -9,6 +9,7 @@ BEGIN_JUCE_MODULE_DECLARATION
    name:          Tremolo Plugin
    description:   Core of the tremolo plugin
    dependencies:  juce_audio_utils, juce_dsp
+   searchpaths:   include
 
    website:       https://thewolfsound.com
    license:       MIT

@@ -1,5 +1,11 @@
 #pragma once
 
+#include <juce_audio_processors/juce_audio_processors.h>
+
+#include "Parameters.h"
+#include "BypassTransitionSmoother.h"
+#include "Tremolo.h"
+
 namespace tremolo {
 class PluginProcessor : public juce::AudioProcessor {
 public:
@@ -34,6 +40,11 @@ public:
   void setStateInformation(const void* data, int sizeInBytes) override;
 
   juce::AudioProcessorParameter* getBypassParameter() const override;
+
+  Parameters& getParameterRefs() noexcept{
+    return parameters;
+  }
+
 private:
   // TODO: add parameters
   Parameters parameters{*this};
