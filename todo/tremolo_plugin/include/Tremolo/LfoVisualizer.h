@@ -1,23 +1,6 @@
 namespace tremolo {
     class LfoVisualizer  : public juce::Component {
     public:
-        /*
-        void paint(juce::Graphics& g) override {
-            juce::Path sine;
-            const auto strokeWidth = 4.f;
-            const auto halfHeight = getHeight() / 2;
-            const auto amplitude = halfHeight - strokeWidth / 2.f;
-            sine.startNewSubPath(0.f, halfHeight + amplitude * ::sin(phase));
-
-            for (const auto x : std::views::iota(1, getWidth())) {
-                const auto angle = phase + 0.05f * x;
-                sine.lineTo(x, halfHeight + amplitude * ::sin(angle));
-            }
-            g.setColour(juce::Colours::orange);
-            g.strokePath(sine, juce::PathStrokeType{strokeWidth});
-        }
-        */
-
         void setLfoWaveform(Tremolo::LfoWaveform waveform)
         {
             if (currentWaveform != waveform)

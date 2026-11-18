@@ -11,6 +11,15 @@ PluginEditor::PluginEditor(PluginProcessor& p) : AudioProcessorEditor(&p) {
     addAndMakeVisible(logo);
     addAndMakeVisible(waveformToggle);
     addAndMakeVisible(lfoVisualizer);
+    rateSlider.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    rateSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+    rateSlider.setPopupDisplayEnabled(true, true, this);
+    rateSlider.setRange(1.0,  30.0, 0.5);
+    rateSlider.onValueChange = [this] () {
+      DBG("Rate Slider Values: " << rateSlider.getValue());
+    };
+    rateSlider.setTextValueSuffix(" Hz");
+    addAndMakeVisible(rateSlider);
 
     waveformToggle.onClick = [this]()
     {
@@ -27,7 +36,7 @@ PluginEditor::PluginEditor(PluginProcessor& p) : AudioProcessorEditor(&p) {
 
     void PluginEditor::resized()
 {
-    const auto bounds = getLocalBounds();
+   const auto bounds = getLocalBounds();
 
     background.setBounds(bounds);
 
@@ -40,5 +49,12 @@ PluginEditor::PluginEditor(PluginProcessor& p) : AudioProcessorEditor(&p) {
     lfoVisualizer.setBounds({18, 149, 504, 92});
 
     waveformToggle.setBounds(0, 110, 100, 25);
+
+    auto rateSliderBounds = bounds;
+    rateSliderBounds.removeFromLeft(230);
+    rateSliderBounds.removeFromRight(230);
+    rateSliderBounds.removeFromTop(40);
+    rateSliderBounds.removeFromBottom(150);
+    rateSlider.setBounds(rateSliderBounds);
     }
 }  // namespace tremolo

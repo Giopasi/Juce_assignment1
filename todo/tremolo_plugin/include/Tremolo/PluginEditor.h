@@ -11,6 +11,8 @@ private:
   juce::ImageComponent logo;
   juce::ToggleButton waveformToggle{"Triangle"};
 
+  juce::Slider rateSlider;
+
   LfoVisualizer lfoVisualizer;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PluginEditor)
