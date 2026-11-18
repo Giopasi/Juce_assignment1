@@ -4,12 +4,12 @@ namespace tremolo {
 class PluginEditor : public juce::AudioProcessorEditor {
 public:
   explicit PluginEditor(PluginProcessor&);
-
   void resized() override;
 
 private:
   juce::ImageComponent background;
   juce::ImageComponent logo;
+  juce::ToggleButton waveformToggle{"Triangle"};
 
   LfoVisualizer lfoVisualizer;
 

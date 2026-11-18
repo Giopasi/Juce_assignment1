@@ -78,12 +78,13 @@ public:
     }
   }
 
-private:
-  // You should put class members and private functions here
-  static float triangle(float phase) { //static così non è dipendente dalla istanza della classe tremolo
+    static float triangle(float phase) { //static così non è dipendente dalla istanza della classe tremolo
     const auto ft = phase /juce::MathConstants<float>::twoPi;
     return 4.f * std::abs(ft - std::floor(ft + 0.5f)) - 1.f;
   }
+
+private:
+  // You should put class members and private functions here
 
   float getNextLfoValue() {
     return lfos[juce::toUnderlyingType(currentLfo)].processSample(0.f);
